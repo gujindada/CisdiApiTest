@@ -1,0 +1,171 @@
+name:
+ - qingtui/login
+ - qingtui/callSync
+ - qingtui/callRecords
+ - qingtui/callCharge
+ - qingtui/call
+test:
+ - qingtui/login:
+    description: login qingtui
+    method: post
+    url: /v1/user/login
+    headers:
+     Content-Type: application/x-www-form-urlencoded
+     Content-Language: zh
+     Accept-Encoding: gzip
+     User-Agent: QingTui/450;Android 6.0.1;vivo X9Plus Build/MMB29M;0
+     CLIENT: QingTui/450;Android 6.0.1;vivo X9Plus Build/MMB29M;0
+     Content-Length: '244'
+     Connection: Keep-Alive
+     Cookie: SERVERID=c51b73de5b0d98aab90ea057f58a9503|1505697480|1505697480
+     Host: api.qingtui.im
+    params:
+    body:
+     userAccount: '18580124367'
+     countryCode: '+86'
+     userPassword: c9febffeed6ee816cd519bde775bca4d
+     deviceId: dc7e2954be3bc1a3f80777f874944558
+     deviceToken: {"getui":"3c249d9b1eac3df76ba2c07802c495c5"}
+     deviceType: android
+     appVersion: 4100
+     appCode: 0
+    assert:
+     assertKey:
+      - accountId
+     assertContent:
+      - {"value": "e1bda35a09204bc19a98aa709768d3f0",
+      "valueType": null,
+      "length": null,
+      "notNone": True}
+
+ - qingtui/callSync:
+    description: Sync the operation List of telephone contact
+    method: get
+    url: /v1/mpty/call_name/sync
+    headers:
+     User-Agent: okhttp/3.9.0
+     Host: api.qingtui.im
+     Connection: Keep-Alive
+     Accept-Encoding: gzip
+     Cookie: SERVERID=c51b73de5b0d98aab90ea057f58a9503|1512972007|1512971989
+    params:
+    body:
+    assert:
+     assertKey:
+      - code
+     assertContent:
+      - {"value": 0,
+      "valueType": null,
+      "length": null,
+      "notNone": True
+      }
+
+ - qingtui/callRecords:
+    description: get the records of QingTuiCall
+    method: get
+    url: /v1/mpty/records
+    headers:
+     User-Agent: QingTui/450;Android 6.0.1;vivo X9Plus Build/MMB29M;0
+     domainId: 2646d8386de9418ea2ab130c3b567bc2
+     Authorization: qingtui/login--accessToken
+     Content-Language: zh
+     Host: api.qingtui.im
+     Connection: Keep-Alive
+     Accept-Encoding: gzip
+     Cookie: SERVERID=c51b73de5b0d98aab90ea057f58a9503|1512972007|1512971989
+    params:
+     direction: before
+     pageSize: 25
+     time: 1505271391273
+    body:
+    assert:
+     assertKey:
+      - code
+      - message
+     assertContent:
+      - {"value": 0,
+      "valueType": null,
+      "length": null,
+      "notNone": True
+      }
+      - {"value": "success",
+      "valueType": null,
+      "length": null,
+      "notNone": True
+      }
+
+ - qingtui/callCharge:
+    description: charge of QingTuiCall
+    method: get
+    url: /v1/mpty/charge
+    headers:
+     User-Agent: QingTui/40900;Android 6.0.1;vivo X9Plus Build/MMB29M;0
+     CLIENT: QingTui/40900;Android 6.0.1;vivo X9Plus Build/MMB29M;0
+     domainId: 2646d8386de9418ea2ab130c3b567bc2
+     Authorization: qingtui/login--accessToken
+     Content-Language: zh
+     Host: api.qingtui.im
+     Connection: Keep-Alive
+     Accept-Encoding: gzip
+     Cookie: SERVERID=c51b73de5b0d98aab90ea057f58a9503|1512972007|1512971989
+    params:
+     direction: before
+     pageSize: 25
+     time: 1505271391273
+    body:
+    assert:
+     assertKey:
+      - code
+      - message
+     assertContent:
+      - {"value": 0,
+      "valueType": null,
+      "length": null,
+      "notNone": True
+      }
+      - {"value": "success",
+      "valueType": null,
+      "length": null,
+      "notNone": True
+      }
+ - qingtui/call:
+    description: start to call
+    method: post
+    url: /v1/mpty/call
+    headers:
+     Content-Type: application/json; charset=UTF-8
+     Content-Language: zh
+     Accept-Encoding: gzip
+     User-Agent: QingTui/40900;Android 6.0.1;vivo X9Plus Build/MMB29M;0
+     CLIENT: QingTui/40900;Android 6.0.1;vivo X9Plus Build/MMB29M;0
+     Authorization: qingtui/login--accessToken
+     domainId: 2646d8386de9418ea2ab130c3b567bc2
+     Content-Length: '197'
+     Connection: Keep-Alive
+     Cookie: SERVERID=c51b73de5b0d98aab90ea057f58a9503|1505697480|1505697480
+     Host: api.qingtui.im
+    params:
+    body:
+     - {"accountId": "e1bda35a09204bc19a98aa709768d3f0",
+     "mobilephone": "18580124367",
+     "name": bisheng
+     }
+     - {"accountId": "8a43d7ad85754186b341668e46ede1cc",
+     "mobilephone": "18375966727",
+     "name": zhangban
+     }
+    assert:
+     assertKey:
+      - code
+      - message
+     assertContent:
+      - {"value": 0,
+      "valueType": null,
+      "length": null,
+      "notNone": True
+      }
+      - {"value": "success",
+      "valueType": null,
+      "length": null,
+      "notNone": True
+      }
